@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/arash/code/SavvyCoders/CAPSTONE/pollution_data_2019.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1638"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,15:mainAQI_DATA_MERGED"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="AQI_DATA_2019" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="288"/><column index="2" value="57"/><column index="3" value="36"/><column index="4" value="75"/><column index="5" value="57"/><column index="6" value="81"/><column index="7" value="195"/><column index="8" value="87"/><column index="9" value="111"/><column index="10" value="87"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="AQI_DATA_2020" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="207"/><column index="2" value="63"/><column index="3" value="31"/><column index="4" value="74"/><column index="5" value="61"/><column index="6" value="83"/><column index="7" value="186"/><column index="8" value="87"/><column index="9" value="111"/><column index="10" value="88"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="AQI_DATA_MERGED" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="147"/><column index="2" value="93"/><column index="3" value="103"/><column index="4" value="75"/><column index="5" value="57"/><column index="6" value="81"/><column index="7" value="195"/><column index="8" value="87"/><column index="9" value="111"/><column index="10" value="87"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="annual_aqi_by_cbsa_2020" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="1" mode="0"/></sort><column_widths><column index="1" value="254"/><column index="2" value="63"/><column index="3" value="37"/><column index="4" value="74"/><column index="5" value="61"/><column index="6" value="83"/><column index="7" value="186"/><column index="8" value="87"/><column index="9" value="111"/><column index="10" value="88"/><column index="11" value="48"/><column index="12" value="105"/><column index="13" value="64"/><column index="14" value="50"/><column index="15" value="56"/><column index="16" value="68"/><column index="17" value="66"/><column index="18" value="62"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="annual_aqi_by_cbsa_2022" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="288"/><column index="2" value="57"/><column index="3" value="36"/><column index="4" value="75"/><column index="5" value="57"/><column index="6" value="81"/><column index="7" value="195"/><column index="8" value="87"/><column index="9" value="111"/><column index="10" value="87"/><column index="11" value="45"/><column index="12" value="111"/><column index="13" value="63"/><column index="14" value="45"/><column index="15" value="51"/><column index="16" value="63"/><column index="17" value="63"/><column index="18" value="57"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">SELECT * FROM annual_aqi_by_cbsa_2019</sql><sql name="SQL 2">CREATE TABLE AQI_DATA_2020 (
+CBSA TEXT,
+ CBSACode INTEGER, 
+ Year INTEGER, 
+ DayswithAQI INTEGER, 
+ GoodDays INTEGER, 
+ ModerateDays INTEGER,
+ UnhealthyforSensitiveGroupsDays INTEGER, 
+ UnhealthyDays INTEGER, 
+ VeryUnhealthyDays INTEGER, 
+ HazardousDays INTEGER );
+ 
+</sql><sql name="SQL 3"> INSERT INTO AQI_DATA_2020 (
+ CBSA, 
+ CBSACode,
+ Year, 
+ DayswithAQI, 
+ GoodDays, 
+ ModerateDays, 
+ UnhealthyforSensitiveGroupsDays, 
+ UnhealthyDays, 
+ VeryUnhealthyDays, 
+ HazardousDays )
+ SELECT 
+ AQI_20.CBSA, 
+ AQI_20. CBSACode,
+ AQI_20.Year, 
+ AQI_20.DayswithAQI, 
+ AQI_20.GoodDays, 
+ AQI_20.ModerateDays, 
+ AQI_20.UnhealthyforSensitiveGroupsDays, 
+AQI_20. UnhealthyDays, 
+ AQI_20.VeryUnhealthyDays, 
+ AQI_20.HazardousDays 
+FROM annual_aqi_by_cbsa_2020 AS AQI_20
+WHERE CBSACode IN (31080,  35620,  28180)  ;</sql><sql name="SQL 4">SELECT 2019 as Year,
+avg(GoodDays) as AvgGoodDays,
+avg(ModerateDays) as AvgModerateDays,
+avg(UnhealthyforSensitiveGroupsDays) as AvgUnhealthyFSGDays,
+avg(UnhealthyDays) as AvgUnhealthyDays,
+avg(VeryUnhealthyDays) as AvgVeryUnhealthyDays,
+avg(HazardousDays) as AvgHazardousDays
+FROM annual_aqi_by_cbsa_2019
+
+UNION
+
+SELECT 2020 as Year,
+avg(GoodDays) as AvgGoodDays,
+avg(ModerateDays) as AvgModerateDays,
+avg(UnhealthyforSensitiveGroupsDays) as AvgUnhealthyFSGDays,
+avg(UnhealthyDays) as AvgUnhealthyDays,
+avg(VeryUnhealthyDays) as AvgVeryUnhealthyDays,
+avg(HazardousDays) as AvgHazardousDays
+FROM annual_aqi_by_cbsa_2020
+
+UNION
+SELECT 2021 as Year,
+avg(GoodDays) as AvgGoodDays,
+avg(ModerateDays) as AvgModerateDays,
+avg(UnhealthyforSensitiveGroupsDays) as AvgUnhealthyFSGDays,
+avg(UnhealthyDays) as AvgUnhealthyDays,
+avg(VeryUnhealthyDays) as AvgVeryUnhealthyDays,
+avg(HazardousDays) as AvgHazardousDays
+FROM annual_aqi_by_cbsa_2021
+
+UNION
+
+SELECT 2022 as Year,
+avg(GoodDays) as AvgGoodDays,
+avg(ModerateDays) as AvgModerateDays,
+avg(UnhealthyforSensitiveGroupsDays) as AvgUnhealthyFSGDays,
+avg(UnhealthyDays) as AvgUnhealthyDays,
+avg(VeryUnhealthyDays) as AvgVeryUnhealthyDays,
+avg(HazardousDays) as AvgHazardousDays
+FROM annual_aqi_by_cbsa_2022
+
+--WHERE CBSACode IN (&quot;31080&quot;, &quot;35620&quot;, &quot;28180&quot;);</sql><sql name="SQL 6">INSERT INTO AQI_DATA_MERGED
+SELECT CBSA, CBSACode, Year, DayswithAQI, GoodDays, ModerateDays, UnhealthyforSensitiveGroupsDays, UnhealthyDays, VeryUnhealthyDays, HazardousDays
+FROM
+(SELECT *
+FROM annual_aqi_by_cbsa_2019
+WHERE CBSACode IN (&quot;31080&quot;,  &quot;35620&quot;,  &quot;28180&quot;)
+
+UNION 
+
+SELECT *
+FROM annual_aqi_by_cbsa_2020
+WHERE CBSACode IN (&quot;31080&quot;,  &quot;35620&quot;,  &quot;28180&quot;)
+
+UNION 
+
+SELECT *
+FROM annual_aqi_by_cbsa_2021
+WHERE CBSACode IN (&quot;31080&quot;,  &quot;35620&quot;,  &quot;28180&quot;)
+
+UNION 
+
+SELECT *
+FROM annual_aqi_by_cbsa_2022
+WHERE CBSACode IN (&quot;31080&quot;,  &quot;35620&quot;,  &quot;28180&quot;)
+)</sql><current_tab id="4"/></tab_sql></sqlb_project>
